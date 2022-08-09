@@ -1,0 +1,37 @@
+.container {
+    width: 1155px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+.lawyer-grid-container {
+    max-width: 100%;
+    margin: 0 auto;
+    display: grid;
+    gap: 24px;
+}
+.lawyer-grid-container img {
+    max-width: 100%;
+}
+.lawyer-grid-container .lawyer-item {
+    background-color: #fff;
+}
+.lawyer-position,
+.lawyer-name,
+.lawyer-desc,
+.lawyer-social {
+    padding-left: 15px;
+    padding-right: 15px;
+
+}
+
+@media (min-width: 600px) {
+    .lawyer-grid-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 900px) {
+    .lawyer-grid-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

@@ -4,7 +4,7 @@
  * @wordpress-plugin
  * Plugin Name:       Lawyer CPT
  * Plugin URI:        https://github.com/hinayupak/Lawyer-CPT
- * Description:       CPT for Lawyers
+ * Description:       CPT for Lawyers, use shortcode [lawyer-list] to display in grid
  * Version:           1.0.0
  * Author:            Joshua Hernandez
  * License:           GPL-2.0+
@@ -55,3 +55,49 @@ function cpt_register_my_cpts_lawyers() {
 }
 
 add_action( 'init', 'cpt_register_my_cpts_lawyers' );
+
+// Load style
+function lawyer_cpt_styles()
+{
+    wp_register_style('lawyer-cpt', plugin_dir_url( __FILE__ ) . 'assets/lawyer-styles.css');
+    wp_enqueue_style( 'lawyer-cpt' );
+}
+add_action('wp_enqueue_scripts', 'lawyer_cpt_styles');
+
+// Shortcode for Lawyers in grid
+function lawyer_cpt_create_grid() {
+  
+    $args = array(
+                    'post_type'      => 'lawyers',
+                    'posts_per_page' => '8',
+                    'publish_status' => 'published',
+                 );
+  
+    $query = new WP_Query($args);
+  
+    if($query->have_posts()) :
+
+        $result .= '<div class="lawyer-grid-container">';
+
+        while($query->have_posts()) :
+  
+            $query->the_post() ;
+                      
+        $result .= '<div class="lawyer-item">';
+        $result .= '<div class="lawyer-poster"><img src="' . get_the_post_thumbnail_url() . '"></div>';
+        $result .= '<div class="lawyer-position">' . get_field( 'position' ) . '</div>';
+        $result .= '<div class="lawyer-name">' . get_the_title() . '</div>';
+        $result .= '<div class="lawyer-desc">' . get_the_content() . '</div>';
+        $result .= '</div>';
+  
+        endwhile;
+  
+        wp_reset_postdata();
+
+        $result .= '</div>';
+    endif;    
+  
+    return $result;            
+}
+  
+add_shortcode( 'lawyer-list', 'lawyer_cpt_create_grid' );
