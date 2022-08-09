@@ -71,6 +71,7 @@ function lawyer_cpt_create_grid() {
                     'post_type'      => 'lawyers',
                     'posts_per_page' => '8',
                     'publish_status' => 'published',
+                    'order' => 'ASC'
                  );
   
     $query = new WP_Query($args);
@@ -84,10 +85,26 @@ function lawyer_cpt_create_grid() {
             $query->the_post() ;
                       
         $result .= '<div class="lawyer-item">';
-        $result .= '<div class="lawyer-poster"><img src="' . get_the_post_thumbnail_url() . '"></div>';
-        $result .= '<div class="lawyer-position">' . get_field( 'position' ) . '</div>';
-        $result .= '<div class="lawyer-name">' . get_the_title() . '</div>';
-        $result .= '<div class="lawyer-desc">' . get_the_content() . '</div>';
+            $result .= '<a href="' . get_permalink() . '">';
+            $result .= '<div class="lawyer-poster"><img src="' . get_the_post_thumbnail_url() . '"></div>';
+            $result .= '<div class="lawyer-position">' . get_field( 'position' ) . '</div>';
+            $result .= '<div class="lawyer-name">' . get_the_title() . '</div>';
+            $result .= '<div class="lawyer-desc">' . get_the_content() . '</div>';
+            $result .= '</a>';
+            $result .= '<div class="lawyer-social">';
+                // if(get_field( 'instagram' )) ? $result .= '<a href="' . get_field( 'instagram' ) . '" alt="Instagram" target="_blank">Insta</a>' : '';
+                // if(get_field( 'linkedin' )) ? $result .= '<a href="' . get_field( 'linkedin' ) . '" alt="linkedin" target="_blank">Insta</a>' : '';
+                // if(get_field( 'gmail' )) ? $result .= '<a href="' . get_field( 'gmail' ) . '" alt="gmail" target="_blank">Insta</a>' : '';
+                if(get_field( 'instagram' )) {
+                    $result .= '<a href="' . get_field( 'instagram' ) . '" alt="Instagram" target="_blank">Insta</a>';
+                }
+                if(get_field( 'linkedin' )) {
+                    $result .= '<a href="' . get_field( 'linkedin' ) . '" alt="linkedin" target="_blank">linkedin</a>';
+                }
+                if(get_field( 'gmail' )) {
+                    $result .= '<a href="' . get_field( 'gmail' ) . '" alt="gmail" target="_blank">gmail</a>';
+                }
+            $result .= '</div>';
         $result .= '</div>';
   
         endwhile;
