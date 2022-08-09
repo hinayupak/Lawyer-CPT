@@ -13,7 +13,7 @@
  * Domain Path:       /languages
  */
 
-function cptui_register_my_cpts_lawyers() {
+function cpt_register_my_cpts_lawyers() {
 
 	/**
 	 * Post Type: Lawyers.
@@ -54,4 +54,4 @@ function cptui_register_my_cpts_lawyers() {
 	register_post_type( "lawyers", $args );
 }
 
-add_action( 'init', 'cptui_register_my_cpts_lawyers' );
+add_action( 'init', 'cpt_register_my_cpts_lawyers' );
